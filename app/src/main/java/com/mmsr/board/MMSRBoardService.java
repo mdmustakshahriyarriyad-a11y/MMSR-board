@@ -36,19 +36,18 @@ public class MMSRBoardService extends InputMethodService {
             T_SYM = 5, T_ABC = 6, T_EMOJI = 7, T_SYM2 = 8, T_SPACER = 99;
     private static final int L_EN = 0, L_BN = 1, L_PH = 2, L_SYM = 3, L_EMOJI = 4;
 
-    // Bangla dependent signs (shown on a dotted circle)
     private static final String COMBINING =
             "\u09BE\u09BF\u09C0\u09C1\u09C2\u09C3\u09C7\u09C8\u09CB\u09CC\u0981\u09CD";
     private static final String BN_KARS = "\u09BE\u09BF\u09C0\u09C1\u09C2\u09C3\u09C7\u09C8\u09CB\u09CC";
 
     private static final String[] EMOJI_TABS = {"😀", "👍", "💖", "🐶", "🍎", "📱"};
     private static final String[] EMOJI_DATA = {
-            "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😢 😭 😤 😠 😡 🤬 🤯 😳 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 😶 😐 😑 😬 🙄 😯 😴 🤤 😷 🤒 🤕 🤢 🤮 😵 🤠 😈 👿 💀 👻 👽 🤖 💩",
-            "👍 👎 👌 🤞 🤟 🤘 🤙 👈 👉 👆 👇 🤚 🖖 👋 🤝 🙏 👏 🙌 👐 🤲 💪 🖕 🤳 💅 👀 👂 👃 🧠 👄 👅 👶 👦 👧 👨 👩 👴 👵 🙋 🙆 🙅 🤦 🤷 💃 🕺 🏃 🚶",
-            "\u2764\uFE0F 🧡 💛 💚 💙 💜 🖤 💔 💕 💞 💓 💗 💖 💘 💝 💯 💢 💥 💫 💦 💨 🔥 ⭐ 🌟 ✨ ⚡ 🎉 🎊 🎈 🎁 🏆 ✅ ❌ ❓ ❗ ➕ ➖ 💤 🔔",
-            "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🐤 🦆 🦅 🦉 🐺 🐴 🦄 🐝 🐛 🦋 🐌 🐞 🐢 🐍 🐙 🦀 🐠 🐟 🐬 🐳 🐘 🐒 🌸 🌹 🌻 🌲 🌴 🍀 🌍 🌙 🌈",
-            "🍎 🍊 🍋 🍌 🍉 🍇 🍓 🍒 🍑 🍍 🥝 🍅 🥑 🍆 🥕 🌽 🍞 🧀 🍗 🍖 🍔 🍟 🍕 🌭 🌮 🍜 🍝 🍣 🍤 🍚 🍦 🍩 🍪 🎂 🍰 🍫 🍬 ☕ 🍵 🍺 🍷 🥤",
-            "📱 💻 ⌚ 📷 🎧 🎤 🎮 ⚽ 🏀 🏏 🚗 🚕 🚌 🚀 🏠 🏫 🏥 💰 💳 📚 📌 🔑 🔒 💡 🔋 🎵 🎶 📞 📧 🕐"
+            "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😋 😛 😜 🤪 🤓 😎 🤩 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😢 😭 😤 😠 😡 🤯 😳 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 😶 😐 😑 😬 🙄 😯 😴 😷 🤒 🤕 🤢 🤮 😵 🤠 😈 💀 👻 👽 🤖",
+            "👍 👎 👌 🤞 🤟 🤘 🤙 👈 👉 👆 👇 👋 🤝 🙏 👏 🙌 💪 👀 👂 👃 👄 👅 👶 👦 👧 👨 👩 👴 👵 🙋 🙆 🙅 🤦 🤷 💃 🏃",
+            "\u2764\uFE0F 🧡 💛 💚 💙 💜 🖤 💔 💕 💞 💓 💗 💖 💘 💝 💯 💢 💥 💫 💦 🔥 ⭐ 🌟 ✨ ⚡ 🎉 🎊 🎈 🎁 🏆 ✅ ❌ ❓ ❗ 💤 🔔",
+            "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🦆 🦅 🦉 🐺 🐴 🦄 🐝 🐛 🦋 🐌 🐢 🐍 🐙 🦀 🐠 🐬 🐳 🐘 🌸 🌹 🌻 🌲 🌴 🍀 🌍 🌙 🌈",
+            "🍎 🍊 🍋 🍌 🍉 🍇 🍓 🍒 🍑 🍍 🥝 🍅 🥑 🍆 🥕 🌽 🍞 🧀 🍗 🍖 🍔 🍟 🍕 🌭 🌮 🍜 🍝 🍣 🍚 🍦 🍩 🍪 🎂 🍰 🍫 🍬 ☕ 🍵 🍺 🍷",
+            "📱 💻 ⌚ 📷 🎧 🎤 🎮 ⚽ 🏀 🏏 🚗 🚌 🚀 🏠 🏫 🏥 💰 💳 📚 📌 🔑 🔒 💡 🔋 🎵 🎶 📞 📧"
     };
 
     private static final HashMap<String, String[]> EN_ALTS = new HashMap<>();
@@ -80,12 +79,6 @@ public class MMSRBoardService extends InputMethodService {
         alt(EN_ALTS, "1", "¹½⅓");
         alt(EN_ALTS, "2", "²⅔");
         alt(EN_ALTS, "3", "³¾");
-        alt(EN_ALTS, "4", "⁴");
-        alt(EN_ALTS, "5", "⁵");
-        alt(EN_ALTS, "6", "⁶");
-        alt(EN_ALTS, "7", "⁷");
-        alt(EN_ALTS, "8", "⁸");
-        alt(EN_ALTS, "9", "⁹");
         alt(EN_ALTS, "0", "°ⁿ");
         alt(EN_ALTS, ".", "!?:;…");
 
@@ -131,8 +124,6 @@ public class MMSRBoardService extends InputMethodService {
             pToolbar = true, pDoubleSpace = true;
     private int pHeight = 52;
     private int cBg, cKey, cSpecial, cText, cAccent;
-
-    // ------------------------------------------------------------ lifecycle
 
     @Override
     public void onCreate() {
@@ -212,8 +203,6 @@ public class MMSRBoardService extends InputMethodService {
         }
     }
 
-    // ------------------------------------------------------------ prefs / theme
-
     private void loadPrefs() {
         if (prefs == null) prefs = getSharedPreferences("mmsr_prefs", MODE_PRIVATE);
         pVibrate = prefs.getBoolean("vibrate", true);
@@ -284,8 +273,6 @@ public class MMSRBoardService extends InputMethodService {
         s.addState(new int[]{}, shape(color));
         return s;
     }
-
-    // ------------------------------------------------------------ building the UI
 
     private void requestRebuild() {
         h.post(new Runnable() {
@@ -476,6 +463,14 @@ public class MMSRBoardService extends InputMethodService {
                 r3.add(delKey(1f));
                 addRow(r3);
             } else {
+                addRow(chars("কখগঘঙচছজঝঞ", false, BN_ALTS));
+                addRow(chars("টঠডঢণতথদধন", false, BN_ALTS));
+                ArrayList<Key> r3 = new ArrayList<>();
+                r3.add(shiftKey(1f));
+                r3.addAll(chars("পফবভমযরল", false, BN_ALTS));
+                r3.add(delKey(1f));
+                addRow(r3);
+            } else {
                 addRow(chars("অআইঈউঊঋএঐও", false, BN_ALTS));
                 addRow(chars(BN_KARS, false, null));
                 ArrayList<Key> r3 = new ArrayList<>();
@@ -526,4 +521,449 @@ public class MMSRBoardService extends InputMethodService {
         if (symPage == 0) {
             addRow(chars("@#$_&-+()/", false, null));
             addRow(chars("*\"':;!?,.%", false, null));
-       
+            r3.add(new Key("=\\<", "", T_SYM2, 1.5f));
+            r3.addAll(chars("{}…±«»¡", false, null));
+        }
+        r3.add(delKey(1.5f));
+        addRow(r3);
+        ArrayList<Key> b = new ArrayList<>();
+        b.add(new Key("ABC", "", T_ABC, 1.5f));
+        b.add(new Key(",", ",", T_CHAR, 1f));
+        b.add(new Key(langName(), "", T_SPACE, 4f));
+        b.add(new Key(".", ".", T_CHAR, 1f));
+        b.add(new Key(enterLabel(), "", T_ENTER, 1.4f));
+        addRow(b);
+    }
+
+    private void buildEmoji() {
+        LinearLayout tabs = new LinearLayout(this);
+        tabs.setOrientation(LinearLayout.HORIZONTAL);
+        for (int i = 0; i < EMOJI_TABS.length; i++) {
+            final int idx = i;
+            TextView t = new TextView(this);
+            t.setText(EMOJI_TABS[i]);
+            t.setTextSize(20);
+            t.setGravity(Gravity.CENTER);
+            t.setBackground(keyBg(i == emojiCat ? cAccent : cSpecial));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(40), 1f);
+            lp.setMargins(dp(2), dp(2), dp(2), dp(3));
+            t.setLayoutParams(lp);
+            t.setOnClickListener(v -> {
+                emojiCat = idx;
+                requestRebuild();
+            });
+            tabs.addView(t);
+        }
+        keysBox.addView(tabs, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        ScrollView sv = new ScrollView(this);
+        LinearLayout col = new LinearLayout(this);
+        col.setOrientation(LinearLayout.VERTICAL);
+        String[] list = EMOJI_DATA[emojiCat].split(" ");
+        int cols = 8;
+        for (int i = 0; i < list.length; i += cols) {
+            LinearLayout r = new LinearLayout(this);
+            r.setOrientation(LinearLayout.HORIZONTAL);
+            for (int j = 0; j < cols; j++) {
+                TextView t = new TextView(this);
+                t.setGravity(Gravity.CENTER);
+                t.setTextSize(24);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(pHeight), 1f);
+                t.setLayoutParams(lp);
+                if (i + j < list.length) {
+                    final String e = list[i + j];
+                    t.setText(e);
+                    t.setOnClickListener(v -> {
+                        feedback(T_CHAR);
+                        InputConnection ic = getCurrentInputConnection();
+                        if (ic != null) ic.commitText(e, 1);
+                    });
+                }
+                r.addView(t);
+            }
+            col.addView(r);
+        }
+        sv.addView(col);
+        keysBox.addView(sv, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(pHeight) * 4));
+
+        ArrayList<Key> b = new ArrayList<>();
+        b.add(new Key("ABC", "", T_ABC, 1.5f));
+        b.add(new Key(langName(), "", T_SPACE, 4f));
+        b.add(delKey(1.5f));
+        addRow(b);
+    }
+
+    private void attach(final View v, final Key k) {
+        v.setOnTouchListener(new View.OnTouchListener() {
+            boolean longDone;
+            float downX;
+            Runnable lp;
+            Runnable rep;
+
+            private void cancel() {
+                if (lp != null) h.removeCallbacks(lp);
+                if (rep != null) h.removeCallbacks(rep);
+            }
+
+            @Override
+            public boolean onTouch(final View view, MotionEvent e) {
+                switch (e.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        dismissAlts();
+                        longDone = false;
+                        downX = e.getX();
+                        view.setPressed(true);
+                        feedback(k.type);
+                        if (k.type == T_DEL) {
+                            doKey(k);
+                            rep = new Runnable() {
+                                @Override
+                                public void run() {
+                                    doKey(k);
+                                    h.postDelayed(this, 45);
+                                }
+                            };
+                            h.postDelayed(rep, 400);
+                        } else if (k.type == T_SPACE) {
+                            lp = new Runnable() {
+                                @Override
+                                public void run() {
+                                    longDone = true;
+                                    cycleLanguage();
+                                }
+                            };
+                            h.postDelayed(lp, 450);
+                        } else if (k.type == T_CHAR && k.alts != null) {
+                            lp = new Runnable() {
+                                @Override
+                                public void run() {
+                                    longDone = true;
+                                    view.setPressed(false);
+                                    showAlts(view, k);
+                                }
+                            };
+                            h.postDelayed(lp, 450);
+                        } else if (k.type == T_CHAR && k.alts != null) {
+                            lp = new Runnable() {
+                                @Override
+                                public void run() {
+                                    longDone = true;
+                                    view.setPressed(false);
+                                    showAlts(view, k);
+                                }
+                            };
+                            h.postDelayed(lp, 350);
+                        }
+                        return true;
+                    case MotionEvent.ACTION_MOVE:
+                        if (k.type == T_SPACE && !longDone && Math.abs(e.getX() - downX) > dp(70)) {
+                            cancel();
+                            longDone = true;
+                            cycleLanguage();
+                        }
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        view.setPressed(false);
+                        cancel();
+                        if (!longDone && k.type != T_DEL) doKey(k);
+                        return true;
+                    case MotionEvent.ACTION_CANCEL:
+                        view.setPressed(false);
+                        cancel();
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+        });
+    }
+
+    private void showAlts(View anchor, Key k) {
+        dismissAlts();
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.HORIZONTAL);
+        box.setPadding(dp(4), dp(4), dp(4), dp(4));
+        GradientDrawable bg = shape(cKey);
+        bg.setStroke(dp(1), cAccent);
+        box.setBackground(bg);
+        for (String a : k.alts) {
+            final String shown = (k.letter && shift) ? a.toUpperCase() : a;
+            TextView t = new TextView(this);
+            t.setText(label(shown));
+            t.setTextSize(22);
+            t.setTextColor(cText);
+            t.setGravity(Gravity.CENTER);
+            t.setPadding(dp(11), dp(8), dp(11), dp(8));
+            t.setOnClickListener(v -> {
+                insertText(shown);
+                dismissAlts();
+            });
+            box.addView(t);
+        }
+        box.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int w = box.getMeasuredWidth();
+        int ph = box.getMeasuredHeight();
+        int[] loc = new int[2];
+        anchor.getLocationOnScreen(loc);
+        int screenW = getResources().getDisplayMetrics().widthPixels;
+        int x = loc[0] + anchor.getWidth() / 2 - w / 2;
+        if (x + w > screenW) x = screenW - w;
+        if (x < 0) x = 0;
+        int y = loc[1] - ph - dp(6);
+        if (y < 0) y = 0;
+        try {
+            altPopup = new PopupWindow(box, ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            altPopup.setBackgroundDrawable(new ColorDrawable(0));
+            altPopup.setOutsideTouchable(true);
+            altPopup.showAtLocation(anchor, Gravity.TOP | Gravity.START, x, y);
+        } catch (Exception ex) {
+            altPopup = null;
+        }
+    }
+
+    private void dismissAlts() {
+        if (altPopup != null) {
+            try {
+                altPopup.dismiss();
+            } catch (Exception ignored) {
+            }
+            altPopup = null;
+        }
+    }
+
+    private void feedback(int type) {
+        if (pVibrate) {
+            Vibrator vb = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            if (vb != null && vb.hasVibrator()) {
+                vb.vibrate(VibrationEffect.createOneShot(12, VibrationEffect.DEFAULT_AMPLITUDE));
+            }
+        }
+        if (pSound) {
+            AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
+            if (am != null) {
+                int fx = AudioManager.FX_KEYPRESS_STANDARD;
+                if (type == T_SPACE) fx = AudioManager.FX_KEYPRESS_SPACEBAR;
+                else if (type == T_DEL) fx = AudioManager.FX_KEYPRESS_DELETE;
+                else if (type == T_ENTER) fx = AudioManager.FX_KEYPRESS_RETURN;
+                am.playSoundEffect(fx, 0.6f);
+            }
+        }
+    }
+
+    private void doKey(Key k) {
+        switch (k.type) {
+            case T_CHAR:
+                typeText(k.letter && shift ? k.out.toUpperCase() : k.out);
+                break;
+            case T_DEL:
+                handleDelete();
+                break;
+            case T_SPACE:
+                handleSpace();
+                break;
+            case T_ENTER:
+                handleEnter();
+                break;
+            case T_SHIFT:
+                handleShift();
+                break;
+            case T_SYM:
+                commitPhonetic();
+                layout = L_SYM;
+                symPage = 0;
+                requestRebuild();
+                break;
+            case T_SYM2:
+                symPage = 1 - symPage;
+                requestRebuild();
+                break;
+            case T_ABC:
+                layout = letterLayout;
+                requestRebuild();
+                break;
+            case T_EMOJI:
+                commitPhonetic();
+                layout = (layout == L_EMOJI) ? letterLayout : L_EMOJI;
+                requestRebuild();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private boolean isAsciiLetter(String s) {
+        if (s.length() != 1) return false;
+        char c = s.charAt(0);
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+    }
+
+    private void typeText(String s) {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null) return;
+        if (layout == L_PH && !passwordMode && isAsciiLetter(s)) {
+            phBuf.append(s);
+            ic.setComposingText(PhoneticEngine.transliterate(phBuf.toString()), 1);
+        } else {
+            commitPhonetic();
+            ic.commitText(s, 1);
+        }
+        if ((layout == L_EN || layout == L_PH) && shift && !caps) {
+            shift = false;
+            refreshLabels();
+        }
+        if (layout == L_BN && bnPage == 1) {
+            bnPage = 0;
+            requestRebuild();
+        }
+        updateAutoCap();
+    }
+
+    private void insertText(String s) {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null) return;
+        commitPhonetic();
+        ic.commitText(s, 1);
+        if ((layout == L_EN || layout == L_PH) && shift && !caps) {
+            shift = false;
+            refreshLabels();
+        }
+        updateAutoCap();
+    }
+
+    private void commitPhonetic() {
+        if (phBuf.length() == 0) return;
+        InputConnection ic = getCurrentInputConnection();
+        if (ic != null) ic.commitText(PhoneticEngine.transliterate(phBuf.toString()), 1);
+        phBuf.setLength(0);
+    }
+
+    private void handleDelete() {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null) return;
+        if (layout == L_PH && phBuf.length() > 0) {
+            phBuf.setLength(phBuf.length() - 1);
+            if (phBuf.length() == 0) {
+                ic.setComposingText("", 1);
+                ic.finishComposingText();
+            } else {
+                ic.setComposingText(PhoneticEngine.transliterate(phBuf.toString()), 1);
+            }
+        } else {
+            sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
+        }
+        updateAutoCap();
+    }
+
+    private void handleSpace() {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null) return;
+        commitPhonetic();
+        long now = SystemClock.uptimeMillis();
+        if (pDoubleSpace && now - lastSpaceTime < 500 && layout != L_SYM && layout != L_EMOJI) {
+            CharSequence b = ic.getTextBeforeCursor(2, 0);
+            if (b != null && b.length() == 2 && b.charAt(1) == ' ') {
+                char c = b.charAt(0);
+                int type = Character.getType(c);
+                if (Character.isLetterOrDigit(c)
+                        || type == Character.NON_SPACING_MARK
+                        || type == Character.COMBINING_SPACING_MARK) {
+                    ic.deleteSurroundingText(1, 0);
+                    ic.commitText(letterLayout == L_EN ? ". " : "\u0964 ", 1);
+                    lastSpaceTime = 0;
+                    updateAutoCap();
+                    return;
+                }
+            }
+        }
+        ic.commitText(" ", 1);
+        lastSpaceTime = now;
+        updateAutoCap();
+    }
+
+    private void handleEnter() {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null) return;
+        commitPhonetic();
+        EditorInfo ei = getCurrentInputEditorInfo();
+        int action = ei == null ? EditorInfo.IME_ACTION_NONE : (ei.imeOptions & EditorInfo.IME_MASK_ACTION);
+        boolean noEnter = ei != null && (ei.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0;
+        boolean multi = ei != null && (ei.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != 0;
+        if (!noEnter && !multi && action != EditorInfo.IME_ACTION_NONE
+                && action != EditorInfo.IME_ACTION_UNSPECIFIED) {
+            ic.performEditorAction(action);
+        } else {
+            sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
+        }
+        updateAutoCap();
+    }
+
+    private void handleShift() {
+        if (layout == L_BN) {
+            bnPage = 1 - bnPage;
+            requestRebuild();
+            return;
+        }
+        long now = SystemClock.uptimeMillis();
+        if (caps) {
+            caps = false;
+            shift = false;
+        } else if (shift && now - lastShiftTime < 350) {
+            caps = true;
+        } else {
+            shift = !shift;
+        }
+        lastShiftTime = now;
+        refreshLabels();
+    }
+
+    private void refreshLabels() {
+        for (int i = 0; i < letterViews.size(); i++) {
+            String o = letterKeys.get(i).out;
+            letterViews.get(i).setText(shift ? o.toUpperCase() : o);
+        }
+        updateShiftView();
+    }
+
+    private void updateShiftView() {
+        if (shiftView == null) return;
+        boolean on = shift || caps;
+        shiftView.setText(caps ? "\u21EA" : "\u21E7");
+        shiftView.setBackground(keyBg(on ? cAccent : cSpecial));
+        shiftView.setText(on ? contrast(cAccent) : cText);
+    }
+
+    private void updateAutoCap() {
+        if (!pAutoCap || layout != L_EN || caps) return;
+        EditorInfo ei = getCurrentInputEditorInfo();
+        InputConnection ic = getCurrentInputConnection();
+        if (ei == null || ic == null || ei.inputType == 0) return;
+        boolean s = ic.getCursorCapsMode(ei.inputType) != 0;
+        if (s != shift) {
+            shift = s;
+            refreshLabels();
+        }
+    }
+
+    private void cycleLanguage() {
+        if (passwordMode) return;
+        commitPhonetic();
+        int[] order = {L_EN, L_BN, L_PH};
+        int idx = 0;
+        for (int i = 0; i < order.length; i++) if (order[i] == letterLayout) idx = i;
+        for (int i = 1; i <= order.length; i++) {
+            int c = order[(idx + i) % order.length];
+            if (langEnabled(c)) {
+                letterLayout = c;
+                break;
+            }
+        }
+        layout = letterLayout;
+        shift = false;
+        caps = false;
+        bnPage = 0;
+        requestRebuild();
+    }
+}
