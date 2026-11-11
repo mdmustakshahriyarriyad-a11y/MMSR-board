@@ -18,15 +18,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Prepare Android SDK
-        shell: bash
-        run: |
-          SDK="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
-          echo "Android SDK: $SDK"
-          sudo mkdir -p "$SDK/licenses"
-          printf '\n24333f8a63b6825ea9c5514f83c2829b004d1fee\n' | sudo tee "$SDK/licenses/android-sdk-license" > /dev/null
-          echo "sdk.dir=$SDK" > local.properties
-
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -36,26 +27,16 @@ jobs:
         shell: bash
         run: |
           mkdir -p app/src/main/res/drawable-nodpi
-          LOGO=""
-          for f in *; do
-            if [ -f "$f" ] && file --mime-type -b "$f" | grep -q '^image/'; then
-              LOGO="$f"
-              break
-            fi
-          done
-          if [ -n "$LOGO" ]; then
-            echo "Using logo: $LOGO"
-            if ! command -v convert > /dev/null 2>&1; then
-              sudo apt-get update && sudo apt-get install -y imagemagick
-            fi
-            convert "$LOGO[0]" -resize 512x512 PNG32:app/src/main/res/drawable-nodpi/ic_launcher.png || cp "$LOGO" app/src/main/res/drawable-nodpi/ic_launcher.png
-          else
-            echo "No logo found, using fallback icon"
-            printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><solid android:color="#1A73E8"/><corners android:radius="20dp"/></shape>' > app/src/main/res/drawable-nodpi/ic_launcher.xml
-          fi
+          printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"><solid android:color="#1A73E8"/><corners android:radius="20dp"/></shape>' > app/src/main/res/drawable-nodpi/ic_launcher.xml
 
       - name: Build debug APK
-        run: gradle assembleDebug --stacktrace --no-daemon
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle assembleDebug --console=plain --no-daemon 2>&1 | tee build.log || {
+            grep -E "error:|What went wrong|Could not|not found|Execution failed" -A2 build.log | head -10 | while IFS= read -r l; do echo "::error::$l"; done
+            exit 1
+          }
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
