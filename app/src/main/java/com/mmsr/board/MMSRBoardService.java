@@ -42,11 +42,11 @@ public class MMSRBoardService extends InputMethodService {
 
     private static final String[] EMOJI_TABS = {"😀", "👍", "💖", "🐶", "🍎", "📱"};
     private static final String[] EMOJI_DATA = {
-            "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😋 😛 😜 🤪 🤓 😎 🤩 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😢 😭 😤 😠 😡 🤯 😳 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 😶 😐 😑 😬 🙄 😯 😴 😷 🤒 🤕 🤢 🤮 😵 🤠 😈 💀 👻 👽 🤖",
+            "😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😋 😛 😜 🤪 🤓 😎 🤩 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😢 😭 😱 😲 😳",
             "👍 👎 👌 🤞 🤟 🤘 🤙 👈 👉 👆 👇 👋 🤝 🙏 👏 🙌 💪 👀 👂 👃 👄 👅 👶 👦 👧 👨 👩 👴 👵 🙋 🙆 🙅 🤦 🤷 💃 🏃",
-            "\u2764\uFE0F 🧡 💛 💚 💙 💜 🖤 💔 💕 💞 💓 💗 💖 💘 💝 💯 💢 💥 💫 💦 🔥 ⭐ 🌟 ✨ ⚡ 🎉 🎊 🎈 🎁 🏆 ✅ ❌ ❓ ❗ 💤 🔔",
-            "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🦆 🦅 🦉 🐺 🐴 🦄 🐝 🐛 🦋 🐌 🐢 🐍 🐙 🦀 🐠 🐬 🐳 🐘 🌸 🌹 🌻 🌲 🌴 🍀 🌍 🌙 🌈",
-            "🍎 🍊 🍋 🍌 🍉 🍇 🍓 🍒 🍑 🍍 🥝 🍅 🥑 🍆 🥕 🌽 🍞 🧀 🍗 🍖 🍔 🍟 🍕 🌭 🌮 🍜 🍝 🍣 🍚 🍦 🍩 🍪 🎂 🍰 🍫 🍬 ☕ 🍵 🍺 🍷",
+            "❤ 🧡 💛 💚 💙 💜 🖤 💔 💕 💞 💓 💗 💖 💘 💝 💯 💢 💥 💫 💦 🔥 ⭐ 🌟 ✨ ⚡ 🎉 🎊 🎈 🎁 🏆 ✅ ❌ ❓ ❗ 💤 🔔",
+            "🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🦆 🦅 🦉 🐺 🐴 🦄 🐝 🐛 🦋 🐌 🐢 🐍 🐙 🦀 🐠 🐬 🐳 🐘 🐥",
+            "🍎 🍊 🍋 🍌 🍉 🍇 🍓 🍒 🍑 🍍 🥝 🍅 🥑 🍆 🥕 🌽 🍞 🧀 🍗 🍖 🍔 🍟 🍕 🌭 🌮 🍜 🍝 🍣 🍚 🍦 🍩 🍪 🎂 🍰 🍫 🍬 ☕",
             "📱 💻 ⌚ 📷 🎧 🎤 🎮 ⚽ 🏀 🏏 🚗 🚌 🚀 🏠 🏫 🏥 💰 💳 📚 📌 🔑 🔒 💡 🔋 🎵 🎶 📞 📧"
     };
 
@@ -275,12 +275,7 @@ public class MMSRBoardService extends InputMethodService {
     }
 
     private void requestRebuild() {
-        h.post(new Runnable() {
-            @Override
-            public void run() {
-                rebuild();
-            }
-        });
+        h.post(() -> rebuild());
     }
 
     private void rebuild() {
@@ -322,7 +317,7 @@ public class MMSRBoardService extends InputMethodService {
         toolbarBox.setOrientation(LinearLayout.HORIZONTAL);
         toolbarBox.setGravity(Gravity.CENTER_VERTICAL);
 
-        TextView settings = toolButton("\u2699");
+        TextView settings = toolButton("⚙");
         settings.setOnClickListener(v -> {
             Intent i = new Intent(this, SettingsActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -345,13 +340,13 @@ public class MMSRBoardService extends InputMethodService {
         View spacerView = new View(this);
         toolbarBox.addView(spacerView, new LinearLayout.LayoutParams(0, 1, 1f));
 
-        TextView hide = toolButton("\u25BE");
+        TextView hide = toolButton("⌄");
         hide.setOnClickListener(v -> requestHideSelf(0));
         toolbarBox.addView(hide);
     }
 
     private String label(String c) {
-        return COMBINING.contains(c) ? "\u25CC" + c : c;
+        return COMBINING.contains(c) ? "◌" + c : c;
     }
 
     private ArrayList<Key> chars(String s, boolean letter, HashMap<String, String[]> alts) {
@@ -371,11 +366,11 @@ public class MMSRBoardService extends InputMethodService {
     }
 
     private Key delKey(float w) {
-        return new Key("\u232B", "", T_DEL, w);
+        return new Key("⌫", "", T_DEL, w);
     }
 
     private Key shiftKey(float w) {
-        String lab = "\u21E7";
+        String lab = "⇧";
         if (layout == L_BN) lab = (bnPage == 0) ? "অআ" : "কখ";
         return new Key(lab, "", T_SHIFT, w);
     }
@@ -388,16 +383,16 @@ public class MMSRBoardService extends InputMethodService {
 
     private String enterLabel() {
         EditorInfo ei = getCurrentInputEditorInfo();
-        if (ei == null) return "\u23CE";
+        if (ei == null) return "↵";
         boolean multi = (ei.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != 0;
-        if (multi || (ei.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0) return "\u23CE";
+        if (multi || (ei.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0) return "↵";
         switch (ei.imeOptions & EditorInfo.IME_MASK_ACTION) {
-            case EditorInfo.IME_ACTION_SEND: return "\u27A4";
-            case EditorInfo.IME_ACTION_GO: return "\u2192";
+            case EditorInfo.IME_ACTION_SEND: return "➤";
+            case EditorInfo.IME_ACTION_GO: return "→";
             case EditorInfo.IME_ACTION_SEARCH: return "🔍";
-            case EditorInfo.IME_ACTION_NEXT: return "\u2192";
-            case EditorInfo.IME_ACTION_DONE: return "\u2713";
-            default: return "\u23CE";
+            case EditorInfo.IME_ACTION_NEXT: return "→";
+            case EditorInfo.IME_ACTION_DONE: return "✓";
+            default: return "↵";
         }
     }
 
@@ -455,14 +450,6 @@ public class MMSRBoardService extends InputMethodService {
         }
         if (layout == L_BN) {
             if (bnPage == 0) {
-                addRow(chars("কখগঘঙচছজঝঞ", false, BN_ALTS));
-                addRow(chars("টঠডঢণতথদধন", false, BN_ALTS));
-                ArrayList<Key> r3 = new ArrayList<>();
-                r3.add(shiftKey(1f));
-                r3.addAll(chars("পফবভমযরল", false, BN_ALTS));
-                r3.add(delKey(1f));
-                addRow(r3);
-            } else {
                 addRow(chars("কখগঘঙচছজঝঞ", false, BN_ALTS));
                 addRow(chars("টঠডঢণতথদধন", false, BN_ALTS));
                 ArrayList<Key> r3 = new ArrayList<>();
@@ -575,7 +562,7 @@ public class MMSRBoardService extends InputMethodService {
                     final String e = list[i + j];
                     t.setText(e);
                     t.setOnClickListener(v -> {
-                        feedback(T_CHAR);
+                        feedback(0);
                         InputConnection ic = getCurrentInputConnection();
                         if (ic != null) ic.commitText(e, 1);
                     });
@@ -645,16 +632,6 @@ public class MMSRBoardService extends InputMethodService {
                                 }
                             };
                             h.postDelayed(lp, 450);
-                        } else if (k.type == T_CHAR && k.alts != null) {
-                            lp = new Runnable() {
-                                @Override
-                                public void run() {
-                                    longDone = true;
-                                    view.setPressed(false);
-                                    showAlts(view, k);
-                                }
-                            };
-                            h.postDelayed(lp, 350);
                         }
                         return true;
                     case MotionEvent.ACTION_MOVE:
@@ -930,9 +907,9 @@ public class MMSRBoardService extends InputMethodService {
     private void updateShiftView() {
         if (shiftView == null) return;
         boolean on = shift || caps;
-        shiftView.setText(caps ? "\u21EA" : "\u21E7");
+        shiftView.setText(caps ? "⇪" : "⇧");
         shiftView.setBackground(keyBg(on ? cAccent : cSpecial));
-        shiftView.setText(on ? contrast(cAccent) : cText);
+        shiftView.setTextColor(on ? contrast(cAccent) : cText);
     }
 
     private void updateAutoCap() {
